@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Acessível com ARIA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        .menu {
+            display: none;
+            background-color: #ecf0f1;
+            padding: 10px;
+            margin-top: 20px;
+            border: 1px solid #bdc3c7;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .image-container {
+            margin-top: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bem-vindo ao nosso site acessível!</h1>
+        <p id="intro">Aqui, você encontrará conteúdos otimizados para todos os usuários. Vamos explorar acessibilidade na web!</p>
+    </header>
+
+    <section>
+        <h2 id="menu-toggle" aria-labelledby="menu-title">Menu Interativo</h2>
+        <button id="menu-button" aria-expanded="false" aria-controls="menu" onclick="toggleMenu()">Abrir Menu</button>
+
+        <div id="menu" class="menu" role="navigation" aria-labelledby="menu-toggle">
+            <ul>
+                <li><a href="#">Link 1</a></li>
+                <li><a href="#">Link 2</a></li>
+                <li><a href="#">Link 3</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="image-container">
+        <h2>Imagem do Submarino</h2>
+        <img src="https://via.placeholder.com/400x300" alt="Ilustração de um submarino parado no fundo do mar. A frente do submarino possui uma escotilha esférica grande. Ele é ladeado por outras 4 escotilhas menores. O submarino tem características futuristas. O submarino é iluminado por uma luz azulada que vem de cima. Atrás do submarino, em segundo plano, surgem de cima duas algas extensas e verticais. O fundo do mar está populado por corais e mais vegetação marítima.">
+    </section>
+
+    <section>
+        <h2>Mudar Cor de Fundo</h2>
+        <button onclick="changeBackgroundColor()">Mudar Cor de Fundo</button>
+    </section>
+
+    <script>
+        // Função para alternar a visibilidade do menu
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            const button = document.getElementById('menu-button');
+            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+            button.setAttribute('aria-expanded', !isExpanded);
+            menu.style.display = isExpanded ? 'none' : 'block';
+        }
+
+        // Função para mudar a cor do fundo
+        function changeBackgroundColor() {
+            const body = document.body;
+            const currentColor = body.style.backgroundColor;
+            body.style.backgroundColor = currentColor === 'rgb(52, 152, 219)' ? 'rgb(39, 174, 96)' : 'rgb(52, 152, 219)';
+        }
+    </script>
+</body>
+</html>
