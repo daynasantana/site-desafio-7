@@ -1,4 +1,4 @@
-name: Jekyll site CI
+name: Deploy Website Acessível
 
 on:
   push:
@@ -8,13 +8,19 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the site in the jekyll/builder container
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Verificar Sintaxe do HTML
       run: |
-        docker run \
-        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-        jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
+        sudo apt-get install -y html-validator
+        html-validator index.html
+
+    - name: Deploy para GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./  # Diretório onde o index.html está localizado
