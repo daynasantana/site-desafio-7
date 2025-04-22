@@ -1,0 +1,32 @@
+
+name: Deploy Website Acessível
+
+on:
+  push:
+    branches:
+      - main  # Quando houver um push para a branch "main"
+  pull_request:
+    branches:
+      - main  # Quando houver um pull request para a branch "main"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Etapa 1: Checar o repositório
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    # Etapa 2: Verificar sintaxe do HTML
+    - name: Verificar Sintaxe do HTML
+      run: |
+        sudo apt-get install -y html-validator
+        html-validator index.html
+
+    # Etapa 3: Publicar no GitHub Pages
+    - name: Deploy para GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./  # Diretório onde o index.html está localizado
